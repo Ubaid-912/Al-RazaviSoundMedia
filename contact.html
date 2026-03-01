@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Al-Razavi Sound & Media</title>
+<link rel="stylesheet" href="contact.css">
+<script src="contact.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#0f172a; color:#fff; }
+nav { display:flex; justify-content:space-between; align-items:center; padding:15px 30px; background:#1e293b; position:relative; }
+nav .logo { font-weight:700; font-size:20px; }
+.nav-links { display:flex; gap:20px; }
+.nav-links a { color:#fff; text-decoration:none; font-weight:600; }
+.nav-links a:hover { color:#22d3ee; }
+
+/* Hamburger */
+.hamburger { display:none; flex-direction: column; gap:5px; cursor:pointer; z-index:1000; }
+.hamburger span { width:25px; height:3px; background:#fff; border-radius:2px; }
+
+/* Mobile Menu */
+.mobile-menu {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background:#0f172a;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.mobile-menu a { color:#fff; font-size:24px; margin:15px 0; text-decoration:none; }
+.close-btn { position:absolute; top:20px; right:20px; font-size:28px; cursor:pointer; color:#fff; }
+
+/* Hero */
+.hero { height:60vh; display:flex; justify-content:center; align-items:center; text-align:center; }
+
+/* Contact Section */
+.section { padding:50px 20px; max-width:1200px; margin:auto; display:flex; flex-direction:column; align-items:center; gap:50px; }
+input, textarea { width:100%; padding:12px; border-radius:6px; border:none; font-size:16px; }
+.btn { display:inline-block; padding:12px 25px; background:#22d3ee; color:#fff; border-radius:6px; font-weight:600; text-decoration:none; transition:0.3s; }
+.btn:hover { background:#1fb8cc; }
+.success-msg { display:none; text-align:center; color:#22d3ee; margin:15px 0; font-weight:600; }
+
+/* Footer */
+footer { text-align:center; padding:20px 0; background:#1e293b; color:#cbd5e1; }
+
+/* Responsive */
+@media (max-width:768px){
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Al-Razavi Sound & Media</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html" style="color:#22d3ee;">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="close-btn" id="closeBtn">✕</div>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1>Contact Us</h1>
+    <p>Reach Out for Event Bookings & Queries</p>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="section">
+  <div style="width:100%; max-width:600px;">
+    <h2 style="margin-bottom:20px;">Send Us a Message</h2>
+    <form id="contactForm" action="https://formspree.io/f/mzdaqjqz" method="POST" style="display:flex; flex-direction:column; gap:15px;">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="tel" name="phone" placeholder="Your Phone" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+      <div class="success-msg" id="successMsg">✅ Your message has been sent successfully! We will contact you at 03222629079 if needed.</div>
+    </form>
+  </div>
+
+  <div style="text-align:center;">
+    <h2>Direct Contact</h2>
+    <p style="color:#cbd5e1;margin:10px 0;">Call or WhatsApp for instant response</p>
+    <a href="tel:+923222629079" class="btn" style="margin:5px;">📞 Call Now</a>
+    <a href="https://wa.me/923222629079" class="btn" style="margin:5px;">💬 WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+© 2026 Al-Razavi Sound & Media | Karachi | Call: 03222629079
+</footer>
+
+<script>
+// Hamburger Menu JS
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeBtn = document.getElementById('closeBtn');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.style.display = 'flex';
+});
+
+closeBtn.addEventListener('click', () => {
+  mobileMenu.style.display = 'none';
+});
+
+document.querySelectorAll('#mobileMenu a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.style.display = 'none';
+  });
+});
+
+// Formspree AJAX Submit
+const form = document.getElementById('contactForm');
+const successMsg = document.getElementById('successMsg');
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: form.method,
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  })
+  .then(response => {
+    if(response.ok){
+      successMsg.style.display = 'block';
+      form.reset();
+    } else {
+      alert("Oops! Something went wrong. Call 03222629079 for direct contact.");
+    }
+  })
+  .catch(error => alert("Oops! Could not submit form. Call 03222629079 for direct contact."));
+});
+</script>
+
+</body>
+</html>
